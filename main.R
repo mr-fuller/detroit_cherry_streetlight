@@ -31,3 +31,10 @@ ggplot(data = filter(both,Device.Type == "Personal")) +
            mapping =  aes(x = Zone.Name, y = Zone.Traffic..StL.Index.,fill = period),
            position = "dodge")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1,hjust = 1))
+
+#calculate percentage difference
+ #filter(before,Device.Type =="Personal" & period =="before")
+ tbl <- bind_cols(select(filter(before,Device.Type =="Personal" ),Zone.Name,Zone.Traffic..StL.Index.),
+           select(filter(after,Device.Type =="Personal" ),Zone.Name,Zone.Traffic..StL.Index.))
+ tbl <- tbl %>% mutate(percent_change = (Zone.Traffic..StL.Index.1 - Zone.Traffic..StL.Index.)/Zone.Traffic..StL.Index.*100)
+                       
